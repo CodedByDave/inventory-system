@@ -8,6 +8,15 @@
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
     <style>
+        /* Prevent layout shift when alert appears */
+        html {
+            overflow-y: scroll;
+        }
+        
+        body {
+            overflow-x: hidden;
+        }
+        
         .password-toggle {
             position: absolute;
             right: 12px;
@@ -41,7 +50,6 @@
             box-shadow: 0 0 0 3px rgba(79, 70, 229, 0.15);
         }
 
-        /* Custom stroke eye icon */
         .eye-icon {
             stroke: currentColor;
             stroke-width: 1.5;
@@ -63,112 +71,166 @@
         input[type="text"]+.password-toggle .eye-icon.slash {
             display: block;
         }
+        
+        /* Custom SweetAlert2 styling */
+        .swal2-popup {
+            border-radius: 12px !important;
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2) !important;
+        }
+        
+        /* Ensure content stays in place */
+        .main-container {
+            min-height: 100vh;
+            display: flex;
+            width: 100%;
+        }
     </style>
 </head>
 
-<body class="h-screen w-screen flex bg-gray-100">
+<body class="bg-gray-100">
+    <div class="main-container">
+        <!-- Left Section (Form) -->
+        <div class="w-full lg:w-1/2 flex items-center justify-center bg-white px-6 lg:px-20">
+            <div class="w-full max-w-md">
 
-    <!-- Left Section (Form) -->
-    <div class="w-full lg:w-1/2 flex items-center justify-center bg-white px-6 lg:px-20">
-        <div class="w-full max-w-md">
+                <!-- Heading -->
+                <h2 class="text-3xl font-bold text-gray-900 mb-2">Sign In</h2>
+                <p class="text-sm text-gray-600 mb-6">Enter your email and password to sign in!</p>
 
-            <!-- Heading -->
-            <h2 class="text-3xl font-bold text-gray-900 mb-2">Sign In</h2>
-            <p class="text-sm text-gray-600 mb-6">Enter your email and password to sign in!</p>
+                <!-- Login Form -->
+                <form action="{{ route('login.post') }}" method="POST" class="space-y-5">
+                    @csrf
 
-            <!-- Login Form -->
-            <form action="{{ route('login') }}" method="POST" class="space-y-5">
-                @csrf
-
-                <!-- Email -->
-                <div>
-                    <label for="email" class="block text-sm font-medium text-gray-700 mb-1.5">Email <span class="text-red-500">*</span></label>
-                    <div class="relative">
-                        <input type="email" name="email" id="email" placeholder="Enter your email address"
-                            class="input-field mt-1 block w-full rounded-lg border border-gray-300 bg-gray-50 py-2.5 px-3.5 shadow-sm focus:outline-none focus:ring-1 sm:text-sm"
-                            required>
+                    <!-- Email -->
+                    <div>
+                        <label for="email" class="block text-sm font-medium text-gray-700 mb-1.5">Email <span
+                                class="text-red-500">*</span></label>
+                        <div class="relative">
+                            <input type="email" name="email" id="email" placeholder="Enter your email address"
+                                class="input-field mt-1 block w-full rounded-lg border border-gray-300 bg-gray-50 py-2.5 px-3.5 shadow-sm focus:outline-none focus:ring-1 sm:text-sm"
+                                required>
+                        </div>
                     </div>
-                    @error('email')
-                    <p class="text-sm text-red-600 mt-1">{{ $message }}</p>
-                    @enderror
-                </div>
 
-                <!-- Password -->
-                <div>
-                    <label for="password" class="block text-sm font-medium text-gray-700 mb-1.5">Password <span class="text-red-500">*</span></label>
-                    <div class="relative">
-                        <input type="password" name="password" id="password" placeholder="Enter your password"
-                            class="input-field mt-1 block w-full rounded-lg border border-gray-300 bg-gray-50 py-2.5 px-3.5 shadow-sm focus:outline-none focus:ring-1 sm:text-sm"
-                            required>
-                        <button type="button" onclick="togglePassword()" class="password-toggle">
-                            <!-- Custom SVG eye icons with stroke only -->
-                            <svg class="eye-icon regular" aria-hidden="true" viewBox="0 0 24 24">
-                                <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path>
-                                <circle cx="12" cy="12" r="3"></circle>
-                            </svg>
-                            <svg class="eye-icon slash" aria-hidden="true" viewBox="0 0 24 24">
-                                <path d="M17.94 17.94A10.07 10.07 0 0 1 12 20c-7 0-11-8-11-8a18.45 18.45 0 0 1 5.06-5.94M9.9 4.24A9.12 9.12 0 0 1 12 4c7 0 11 8 11 8a18.5 18.5 0 0 1-2.16 3.19m-6.72-1.07a3 3 0 1 1-4.24-4.24"></path>
-                                <line x1="1" y1="1" x2="23" y2="23"></line>
-                            </svg>
-                        </button>
+                    <!-- Password -->
+                    <div>
+                        <label for="password" class="block text-sm font-medium text-gray-700 mb-1.5">Password <span
+                                class="text-red-500">*</span></label>
+                        <div class="relative">
+                            <input type="password" name="password" id="password" placeholder="Enter your password"
+                                class="input-field mt-1 block w-full rounded-lg border border-gray-300 bg-gray-50 py-2.5 px-3.5 shadow-sm focus:outline-none focus:ring-1 sm:text-sm"
+                                required>
+                            <button type="button" onclick="togglePassword()" class="password-toggle">
+                                <svg class="eye-icon regular" aria-hidden="true" viewBox="0 0 24 24">
+                                    <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path>
+                                    <circle cx="12" cy="12" r="3"></circle>
+                                </svg>
+                                <svg class="eye-icon slash" aria-hidden="true" viewBox="0 0 24 24">
+                                    <path
+                                        d="M17.94 17.94A10.07 10.07 0 0 1 12 20c-7 0-11-8-11-8a18.45 18.45 0 0 1 5.06-5.94M9.9 4.24A9.12 9.12 0 0 1 12 4c7 0 11 8 11 8a18.5 18.5 0 0 1-2.16 3.19m-6.72-1.07a3 3 0 1 1-4.24-4.24">
+                                    </path>
+                                    <line x1="1" y1="1" x2="23" y2="23"></line>
+                                </svg>
+                            </button>
+                        </div>
                     </div>
-                    @error('password')
-                    <p class="text-sm text-red-600 mt-1">{{ $message }}</p>
-                    @enderror
-                </div>
 
-                <!-- Remember me / Forgot -->
-                <div class="flex items-center justify-between">
-                    <label class="flex items-center space-x-2 text-sm text-gray-600">
-                        <input type="checkbox" class="h-4 w-4 text-indigo-600 border-gray-300 rounded focus:ring-indigo-500">
-                        <span>Remember me</span>
-                    </label>
-                    <a href="{{ route('forgot') }}" class="text-sm font-medium text-indigo-600 hover:text-indigo-800 transition-colors">Forgot password?</a>
-                </div>
+                    <!-- Remember me / Forgot -->
+                    <div class="flex items-center justify-between">
+                        <label class="flex items-center space-x-2 text-sm text-gray-600">
+                            <input type="checkbox"
+                                class="h-4 w-4 text-indigo-600 border-gray-300 rounded focus:ring-indigo-500">
+                            <span>Remember me</span>
+                        </label>
+                        <a href="{{ route('forgot') }}"
+                            class="text-sm font-medium text-indigo-600 hover:text-indigo-800 transition-colors">Forgot
+                            password?</a>
+                    </div>
 
-                <!-- Submit -->
-                <button type="submit"
-                    class="w-full bg-indigo-600 hover:bg-indigo-700 text-white font-semibold py-2.5 rounded-lg shadow-md transition-colors">
-                    Sign In
-                </button>
-            </form>
-        </div>
-    </div>
-
-    <!-- Right Section (Branding) -->
-    <div class="hidden lg:flex w-1/2 bg-indigo-900 text-white flex-col items-center justify-center relative p-8">
-        <div class="text-center max-w-md">
-            <div class="mb-6">
-                <i class="fas fa-chart-line text-5xl text-indigo-300 mb-4"></i>
-                <h1 class="text-4xl font-bold mb-2">Hi, Welcome Back</h1>
+                    <!-- Submit -->
+                    <button type="submit"
+                        class="w-full bg-indigo-600 hover:bg-indigo-700 text-white font-semibold py-2.5 rounded-lg shadow-md transition-colors">
+                        Sign In
+                    </button>
+                </form>
             </div>
-            <p class="text-indigo-200 text-lg">you've been missed!</p>
+        </div>
+
+        <!-- Right Section (Branding) -->
+        <div class="hidden lg:flex w-1/2 bg-indigo-900 text-white flex-col items-center justify-center relative p-8">
+            <div class="text-center max-w-md">
+                <div class="mb-6">
+                    <i class="fas fa-chart-line text-5xl text-indigo-300 mb-4"></i>
+                    <h1 class="text-4xl font-bold mb-2">Hi, Welcome Back</h1>
+                </div>
+                <p class="text-indigo-200 text-lg">you've been missed!</p>
+            </div>
         </div>
     </div>
 
-    <!-- Script: Toggle Password -->
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <script>
+        // Toggle Password Visibility
         function togglePassword() {
             const password = document.getElementById("password");
-            const eyeButton = password.nextElementSibling;
-
-            if (password.type === "password") {
-                password.type = "text";
-            } else {
-                password.type = "password";
-            }
+            password.type = password.type === "password" ? "text" : "password";
         }
 
-        // Add focus styles to inputs for better UX
+        // Input focus styling
         document.querySelectorAll('input').forEach(input => {
             input.addEventListener('focus', function() {
                 this.parentElement.classList.add('ring-2', 'ring-indigo-500', 'ring-opacity-20');
                 this.parentElement.classList.remove('ring-0');
             });
-
             input.addEventListener('blur', function() {
                 this.parentElement.classList.remove('ring-2', 'ring-indigo-500', 'ring-opacity-20');
             });
+        });
+        
+        // Store scroll position before showing alert
+        let scrollPosition = 0;
+        
+        // Function to show alerts without page jump
+        function showAlert(type, message, redirectTo = null) {
+            // Store current scroll position
+            scrollPosition = window.scrollY;
+            
+            // Set body position to fixed and maintain scroll position
+            document.body.style.position = 'fixed';
+            document.body.style.top = `-${scrollPosition}px`;
+            document.body.style.width = '100%';
+            
+            const alertConfig = {
+                icon: type,
+                title: type === 'success' ? 'Success' : 'Login Failed',
+                text: message,
+                confirmButtonColor: type === 'success' ? '#4f46e5' : '#ef4444',
+                willClose: () => {
+                    // Restore body position and scroll
+                    document.body.style.position = '';
+                    document.body.style.top = '';
+                    document.body.style.width = '';
+                    window.scrollTo(0, scrollPosition);
+                    
+                    // Redirect if needed
+                    if (redirectTo) {
+                        window.location.href = redirectTo;
+                    }
+                }
+            };
+            
+            Swal.fire(alertConfig);
+        }
+
+        // Show alerts if there are any messages
+        document.addEventListener('DOMContentLoaded', function() {
+            @if(session('success'))
+                showAlert('success', "{{ session('success') }}", "{{ session('redirectTo', '') }}");
+            @endif
+
+            @if(session('error'))
+                showAlert('error', "{{ session('error') }}");
+            @endif
         });
     </script>
 

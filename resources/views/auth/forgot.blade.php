@@ -21,7 +21,7 @@
             </p>
 
             <!-- Form -->
-            <form action="" method="POST" class="space-y-5">
+            <form action="{{ route('password.email') }}" method="POST" class="space-y-5">
                 @csrf
 
                 <!-- Email -->
@@ -33,9 +33,15 @@
                         class="block w-full rounded-lg border border-gray-300 bg-gray-50 py-2.5 px-3.5 
                                shadow-sm focus:border-indigo-500 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 sm:text-sm"
                         required>
+                    {{-- Error message --}}
                     @error('email')
-                    <p class="text-sm text-red-600 mt-1">{{ $message }}</p>
+                        <p class="text-red-600 text-sm mt-1">{{ $message }}</p>
                     @enderror
+
+                    {{-- Success message --}}
+                    @if (session('status'))
+                        <p class="text-green-600 text-sm mt-1">{{ session('status') }}</p>
+                    @endif
                 </div>
 
                 <!-- Submit -->
