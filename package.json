@@ -7,6 +7,8 @@
         "dev": "vite"
     },
     "devDependencies": {
+        "@nuxtjs/tailwindcss": "^6.14.0",
+        "@tailwindcss/forms": "^0.5.10",
         "@tailwindcss/postcss": "^4.1.13",
         "@tailwindcss/vite": "^4.1.13",
         "admin-lte": "^4.0.0-rc3",
@@ -21,8 +23,11 @@
         "vite": "^7.0.4"
     },
     "dependencies": {
+        "@mdi/js": "^7.4.47",
+        "@vitejs/plugin-vue": "^6.0.1",
         "alpinejs": "^3.15.0",
         "chart.js": "^4.5.0",
+        "numeral": "^2.0.6",
         "vue": "^3.5.21",
         "vue-router": "^4.5.1"
     }

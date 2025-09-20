@@ -1,10 +1,10 @@
 @include('layouts.header', ['title' => 'Admin Dashboard'])
-
+<div class="my-4"></div>
 <!-- Layout wrapper -->
 <div class="layout-wrapper layout-content-navbar">
   <div class="layout-container">
 
-    @include('layouts.sidebar')
+    @include('partials.sidebar-superadmin')
 
     <!-- Layout page -->
     <div class="layout-page">

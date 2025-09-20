@@ -8,13 +8,13 @@ use App\Http\Controllers\Auth\AuthController;
  * Public Routes (accessible without login)
  */
 Route::get('/login', function () {
-    return view('auth.login'); // login.blade.php
+    return view('auth.login');
 })->name('login');
 
 Route::post('/login', [AuthController::class, 'login'])->name('login.post');
 
 Route::get('/forgot', function () {
-    return view('auth.forgot'); // forgot.blade.php
+    return view('auth.forgot');
 })->name('forgot');
 
 Route::post('/forgot-password', [PasswordResetLinkController::class, 'store'])

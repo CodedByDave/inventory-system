@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers\Auth;
+namespace App\Http\Controllers\auth;
 
 use App\Services\Auth\LoginService;
 use App\Http\Controllers\Controller;
@@ -10,20 +10,10 @@ use Illuminate\Http\Request;
 class AuthController extends Controller
 {
     /**
-     * Summary of loginService
-     * @var LoginService
-     * 
+     * @param LoginService $loginService
      */
-    protected LoginService $loginService;
 
-
-    /**
-     * AuthController constructor.
-     */
-    public function __construct(LoginService $loginService)
-    {
-        $this->loginService = $loginService;
-    }
+    public function __construct(private readonly LoginService $loginService) {}
 
     public function login(LoginRequest $request)
     {
@@ -41,7 +31,6 @@ class AuthController extends Controller
 
         return back()->with('error', 'Invalid email or password.');
     }
-
 
     public function logout()
     {
