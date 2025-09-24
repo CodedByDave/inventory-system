@@ -18,9 +18,9 @@ class LoginService
             // Map roles to dashboard routes
             $dashboards = [
                 'admin'   => 'admin.dashboard',
-                'hr'      => 'hr.dashboard',
-                'finance' => 'finance.dashboard',
-                'user'    => 'user.dashboard',
+                'manager'      => 'manager.dashboard',
+                'staff' => 'staff.dashboard',
+                'finance'    => 'finance.dashboard',
             ];
 
             return $dashboards[$role] ?? null;
