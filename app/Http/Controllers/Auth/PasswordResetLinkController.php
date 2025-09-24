@@ -4,35 +4,26 @@ namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\DB;
-use Illuminate\Support\Facades\Mail;
-use Illuminate\Support\Str;
-use App\Mail\ForgotPassword;
+use App\Services\Auth\PasswordResetService;
 
 class PasswordResetLinkController extends Controller
 {
+    public function __construct(private readonly PasswordResetService $service) {}
+
     /**
-     * Handle sending the reset email.
+     * Handle sending the password reset email.
      */
     public function store(Request $request)
     {
-        // Validate email
+        // Validate email input
         $request->validate([
             'email' => 'required|email|exists:users,email',
         ]);
 
-        // Generate token
-        $token = Str::random(60);
-
-        DB::table('password_reset_tokens')->updateOrInsert(
-            ['email' => $request->email],
-            ['token' => $token, 'created_at' => now()]
-        );
-
-
         // Send reset link email
-        Mail::to($request->email)->send(new ForgotPassword($token));
+        $this->service->sendResetLink($request->email);
 
-        return back()->with('status', 'Password reset link sent!');
+        // Redirect back with a success message
+        return back()->with('status', 'Password reset link sent! Check your email.');
     }
 }

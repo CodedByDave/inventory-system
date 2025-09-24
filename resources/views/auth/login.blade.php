@@ -12,11 +12,11 @@
         html {
             overflow-y: scroll;
         }
-        
+
         body {
             overflow-x: hidden;
         }
-        
+
         .password-toggle {
             position: absolute;
             right: 12px;
@@ -71,13 +71,13 @@
         input[type="text"]+.password-toggle .eye-icon.slash {
             display: block;
         }
-        
+
         /* Custom SweetAlert2 styling */
         .swal2-popup {
             border-radius: 12px !important;
             box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2) !important;
         }
-        
+
         /* Ensure content stays in place */
         .main-container {
             min-height: 100vh;
@@ -156,15 +156,10 @@
             </div>
         </div>
 
-        <!-- Right Section (Branding) -->
-        <div class="hidden lg:flex w-1/2 bg-indigo-900 text-white flex-col items-center justify-center relative p-8">
-            <div class="text-center max-w-md">
-                <div class="mb-6">
-                    <i class="fas fa-chart-line text-5xl text-indigo-300 mb-4"></i>
-                    <h1 class="text-4xl font-bold mb-2">Hi, Welcome Back</h1>
-                </div>
-                <p class="text-indigo-200 text-lg">you've been missed!</p>
-            </div>
+        <!-- Right Section (Full Image) -->
+        <div class="hidden lg:flex w-1/2 relative">
+            <img src="{{ asset('assets/images/background.png') }}" alt="Login Background"
+                class="absolute inset-0 w-full h-full object-cover">
         </div>
     </div>
 
@@ -178,28 +173,28 @@
 
         // Input focus styling
         document.querySelectorAll('input').forEach(input => {
-            input.addEventListener('focus', function() {
+            input.addEventListener('focus', function () {
                 this.parentElement.classList.add('ring-2', 'ring-indigo-500', 'ring-opacity-20');
                 this.parentElement.classList.remove('ring-0');
             });
-            input.addEventListener('blur', function() {
+            input.addEventListener('blur', function () {
                 this.parentElement.classList.remove('ring-2', 'ring-indigo-500', 'ring-opacity-20');
             });
         });
-        
+
         // Store scroll position before showing alert
         let scrollPosition = 0;
-        
+
         // Function to show alerts without page jump
         function showAlert(type, message, redirectTo = null) {
             // Store current scroll position
             scrollPosition = window.scrollY;
-            
+
             // Set body position to fixed and maintain scroll position
             document.body.style.position = 'fixed';
             document.body.style.top = `-${scrollPosition}px`;
             document.body.style.width = '100%';
-            
+
             const alertConfig = {
                 icon: type,
                 title: type === 'success' ? 'Success' : 'Login Failed',
@@ -211,19 +206,19 @@
                     document.body.style.top = '';
                     document.body.style.width = '';
                     window.scrollTo(0, scrollPosition);
-                    
+
                     // Redirect if needed
                     if (redirectTo) {
                         window.location.href = redirectTo;
                     }
                 }
             };
-            
+
             Swal.fire(alertConfig);
         }
 
         // Show alerts if there are any messages
-        document.addEventListener('DOMContentLoaded', function() {
+        document.addEventListener('DOMContentLoaded', function () {
             @if(session('success'))
                 showAlert('success', "{{ session('success') }}", "{{ session('redirectTo', '') }}");
             @endif

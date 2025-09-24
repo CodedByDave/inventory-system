@@ -4,9 +4,6 @@ namespace App\Mail;
 
 use Illuminate\Bus\Queueable;
 use Illuminate\Mail\Mailable;
-use Illuminate\Mail\Mailables\Content;
-use Illuminate\Mail\Mailables\Envelope;
-use Illuminate\Mail\Mailables\Address;
 use Illuminate\Queue\SerializesModels;
 
 class ForgotPassword extends Mailable
@@ -14,32 +11,20 @@ class ForgotPassword extends Mailable
     use Queueable, SerializesModels;
 
     public $token;
+    public $email;
 
-    public function __construct($token)
+    public function __construct(string $token, string $email)
     {
         $this->token = $token;
+        $this->email = $email;
     }
 
-    public function envelope(): Envelope
+    public function build()
     {
-        return new Envelope(
-            from: new Address(config('mail.from.address'), config('mail.from.name')),
-            subject: 'Forgot Password',
-        );
-    }
+        $resetUrl = url("/guest/reset-password?token={$this->token}&email=" . urlencode($this->email));
 
-    public function content(): Content
-    {
-        return new Content(
-            view: 'emails.forgotPassword',
-            with: [
-                'token' => $this->token,
-            ]
-        );
-    }
-
-    public function attachments(): array
-    {
-        return [];
+        return $this->subject('Reset Your Password')
+            ->view('emails.reset-link') // simple message with link only
+            ->with(['resetUrl' => $resetUrl]);
     }
 }

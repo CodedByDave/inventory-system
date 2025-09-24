@@ -30,9 +30,10 @@
                         Email <span class="text-red-500">*</span>
                     </label>
                     <input type="email" name="email" id="email" placeholder="Enter your email"
-                        class="block w-full rounded-lg border border-gray-300 bg-gray-50 py-2.5 px-3.5 
+                        class="block w-full rounded-lg border border-gray-300 bg-gray-50 py-2.5 px-3.5
                                shadow-sm focus:border-indigo-500 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 sm:text-sm"
                         required>
+                    <p class="text-xs text-gray-400">Note: Use your registered email only</p>
                     {{-- Error message --}}
                     @error('email')
                         <p class="text-red-600 text-sm mt-1">{{ $message }}</p>
@@ -59,15 +60,10 @@
         </div>
     </div>
 
-    <!-- Right Section (Branding) -->
-    <div class="hidden lg:flex w-1/2 bg-indigo-900 text-white flex-col items-center justify-center relative p-8">
-        <div class="text-center max-w-md">
-            <div class="mb-6">
-                <i class="fas fa-chart-line text-5xl text-indigo-300 mb-4"></i>
-                <h1 class="text-4xl font-bold mb-2">Hi, Welcome Back</h1>
-            </div>
-            <p class="text-indigo-200 text-lg">you've been missed!</p>
-        </div>
+    <!-- Right Section (Full Image) -->
+    <div class="hidden lg:flex w-1/2 relative">
+        <img src="{{ asset('assets/images/background.png') }}" alt="Login Background"
+            class="absolute inset-0 w-full h-full object-cover">
     </div>
 
 </body>

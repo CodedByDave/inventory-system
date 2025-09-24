@@ -7,25 +7,9 @@ use App\Http\Controllers\Auth\AuthController;
 /**
  * Public Routes (accessible without login)
  */
-Route::get('/login', function () {
-    return view('auth.login');
-})->name('login');
-
-Route::post('/login', [AuthController::class, 'login'])->name('login.post');
-
-Route::get('/forgot', function () {
-    return view('auth.forgot');
-})->name('forgot');
-
-Route::post('/forgot-password', [PasswordResetLinkController::class, 'store'])
-    ->name('password.email');
-
-/**
- * Protected Routes (require authentication + role)
- */
-Route::middleware(['auth', 'role:admin'])->group(function () {
-    Route::get('/admin/dashboard', fn() => view('admin.dashboard'))->name('admin.dashboard');
-
-    // Logout route (only for logged-in users)
-    Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
+Route::get('/test', function(){
+    return view('test');
 });
+
+
+require __DIR__ . '/auth.php';

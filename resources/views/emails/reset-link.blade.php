@@ -7,9 +7,7 @@
 <body>
     <h2>Hello,</h2>
     <p>You requested a password reset. Click the link below to reset your password:</p>
-    <a href="{{ url('/reset-password?token=' . $token) }}">
-        Reset Password
-    </a>
+    <p><a href="{{ $resetUrl }}" target="_blank">Click this to proceed</a></p>
     <p>If you didn’t request this, just ignore this email.</p>
 </body>
 </html>
