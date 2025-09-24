@@ -25,11 +25,10 @@ Route::prefix('guest')->group(function () {
 /**
  * Protected Routes (require authentication + role)
  */
-Route::middleware(['auth', 'role:admin'])->group(function () {
-    Route::prefix('admin')->group(function () {
-        Route::get('/dashboard', fn() => view('admin.dashboard'))->name('admin.dashboard');
-    });
 
-    // Logout route
-    Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
+// Admin routes
+Route::middleware(['auth', 'role:admin'])->prefix('admin')->group(function () {
+    Route::get('/dashboard', fn() => view('admin.dashboard'))->name('admin.dashboard');
 });
+
+//add more routes for specific role
