@@ -8,7 +8,7 @@
                     document.write(new Date().getFullYear());
                 </script>
                 , made by
-                <a href="https://themeselection.com" target="_blank" class="footer-link">Dave Magno</a>
+                <a href="https://www.facebook.com/dave.magno.3150" target="_blank" class="footer-link">Dave Magno</a>
             </div>
         </div>
     </div>

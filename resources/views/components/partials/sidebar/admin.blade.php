@@ -16,7 +16,7 @@
     <ul class="menu-inner py-1">
         <!-- Dashboards -->
         <li class="menu-item">
-            <a href="dashboard.html" class="menu-link">
+            <a href="#" class="menu-link">
                 <i class="menu-icon tf-icons bx bx-home-smile"></i>
                 <div class="text-truncate" data-i18n="Dashboards">Dashboard</div>
             </a>
@@ -24,22 +24,18 @@
 
         <!-- User Management-->
         <li class="menu-item">
-            <a href="javascript:void(0);" class="menu-link menu-toggle">
+            <a href="javascript:void(0);" class="menu-link">
                 <i class="menu-icon tf-icons bx bx-user"></i>
                 <div class="text-truncate" data-i18n="User">User Management</div>
             </a>
-            <ul class="menu-sub">
-                <li class="menu-item">
-                    <a href="#" class="menu-link">
-                        <div class="text-truncate">Warehouse Manager</div>
-                    </a>
-                </li>
-                <li class="menu-item">
-                    <a href="#" class="menu-link">
-                        <div class="text-truncate" data-i18n="Analytics">Warehouse Staff</div>
-                    </a>
-                </li>
-            </ul>
+        </li>
+
+        <!-- Product Management-->
+        <li class="menu-item">
+            <a href="javascript:void(0);" class="menu-link">
+                <i class="menu-icon tf-icons bx bx-box"></i>
+            <div class="text-truncate" data-i18n="Product">Product Management</div>
+            </a>
         </li>
     </ul>
 
